@@ -8,7 +8,7 @@
     <style>
         :root {
             --blue: #007bff;
-            --red: #dc3545;
+            --red: #dc3545; /* This red will be used for the graph lines */
             --green: #28a745;
             --white: #fff;
             --gray: #6c757d;
@@ -18,7 +18,7 @@
             --success: #28a745;
             --light: #f8f9fa;
             --dark: #343a40;
-            --black: #000;
+            --black: #000; /* This black will be used for the graph axes */
             --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
@@ -54,8 +54,7 @@
             margin-bottom: 1rem;
         }
         #logo {
-            /* --- LOGO SIZE INCREASED --- */
-            height: 80px; /* Approx. 2cm and slightly bigger */
+            height: 80px;
             width: auto;
         }
         h1 {
@@ -301,7 +300,7 @@
             1. Put your logo file (e.g., "my-logo.png") in the same folder as this HTML file.
             2. Change "logo-placeholder.png" below to your actual file name.
         -->
-        <img id="logo" src="my-logo.png" alt="Logo">
+        <img id="logo" src="logo-placeholder.png" alt="Logo">
         <h1>MODELING IB PHYSICS : KINEMATICS</h1>
     </div>
     
@@ -424,7 +423,6 @@
 </div>
 
 <script>
-    // The JavaScript is unchanged.
     document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.getElementById('simulationCanvas');
         const ctx = canvas.getContext('2d');
@@ -545,17 +543,21 @@
             ctx.fillText('Vy', ballPos.x + 5, vy_end_y - 5);
         }
 
+        // --- JAVASCRIPT GRAPH COLOR LOGIC UPDATED ---
         function drawGraph(gCtx, data, timeLimit, yRange, color) {
             const w = gCtx.canvas.width, h = gCtx.canvas.height;
             const padX = 40, padY = 25;
             gCtx.clearRect(0, 0, w, h);
-            gCtx.strokeStyle = '#dee2e6';
+            
+            // Draw axes and labels in black
+            gCtx.strokeStyle = 'var(--black)';
+            gCtx.fillStyle = 'var(--black)';
             gCtx.lineWidth = 1;
             gCtx.font = '11px var(--font-family-sans-serif)';
-            gCtx.fillStyle = '#6c757d';
             gCtx.beginPath();
             gCtx.moveTo(padX, padY); gCtx.lineTo(padX, h - padY); gCtx.lineTo(w - padX, h - padY);
             gCtx.stroke();
+            
             const yLabels = [yRange.min, (yRange.min + yRange.max) / 2, yRange.max];
             yLabels.forEach(val => {
                 const y = h - padY - ((val - yRange.min) / (yRange.max - yRange.min)) * (h - 2 * padY);
@@ -568,7 +570,10 @@
                 gCtx.textAlign = 'center'; gCtx.textBaseline = 'top';
                 gCtx.fillText(val.toFixed(1) + 's', x, h - padY + 5);
             });
+            
             if (data.length < 2) return;
+            
+            // Draw the plotted line with the specified color (now red)
             gCtx.strokeStyle = color;
             gCtx.lineWidth = 2.5;
             gCtx.beginPath();
@@ -584,12 +589,15 @@
             const timeLimit = finalTime > 0 ? finalTime : (time > 0 ? time : 1);
             const vxRange = { min: ball.vx - 2, max: ball.vx + 2 };
             if (ball.vx === 0) { vxRange.min = -2; vxRange.max = 2; }
-            drawGraph(vxCtx, vxData, timeLimit, vxRange, 'var(--black)');
+            // Call with red color for the line
+            drawGraph(vxCtx, vxData, timeLimit, vxRange, 'var(--red)');
 
             const vyMaxAbs = Math.max(Math.abs(ball.vy), Math.abs(ball.vy + G * timeLimit));
             const vyRange = { min: -vyMaxAbs - 5, max: vyMaxAbs + 5 };
-            drawGraph(vyCtx, vyData, timeLimit, vyRange, 'var(--black)');
+            // Call with red color for the line
+            drawGraph(vyCtx, vyData, timeLimit, vyRange, 'var(--red)');
         }
+        // --- END OF JAVASCRIPT UPDATES ---
 
         function startSimulation() {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
