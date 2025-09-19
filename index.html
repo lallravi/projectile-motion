@@ -6,30 +6,31 @@
     <title>Modeling IB Physics : Kinematics</title>
     
     <style>
+        /* === USER'S DARK THEME APPLIED === */
         :root {
-            --blue: #007bff;
-            --red: #dc3545; /* This red will be used for the graph lines */
-            --green: #28a745;
-            --white: #fff;
-            --gray: #6c757d;
-            --gray-dark: #343a40;
-            --primary: #007bff;
-            --secondary: #6c757d;
-            --success: #28a745;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --black: #000; /* This black will be used for the graph axes */
-            --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --primary-text: #f9fafb;
+            --secondary-text: #9ca3af;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #38bdf8;
+            --success-green: #4ade80;
+            --failure-red: #f87171;
+            --border-color: #374151;
+            --shadow-color: rgba(0, 0, 0, 0.25);
+
+            /* Graph specific colors */
+            --graph-line-red: #f87171;
+            --graph-axis-color: var(--secondary-text);
         }
 
         body {
-            font-family: var(--font-family-sans-serif);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
-            color: var(--dark);
-            background-color: var(--light);
+            color: var(--primary-text);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 1.5rem;
             display: flex;
@@ -39,11 +40,12 @@
         .container {
             width: 100%;
             max-width: 1400px;
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 0.75rem;
-            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.07);
+            box-shadow: 0 0.5rem 1.5rem var(--shadow-color);
             padding: 2rem;
             box-sizing: border-box;
+            border: 1px solid var(--border-color);
         }
         
         .header-container {
@@ -61,20 +63,20 @@
             margin-top: 0;
             margin-bottom: 0;
             font-size: 2.25rem;
+            color: var(--primary-text);
         }
         
         h2, h3 {
             text-align: center;
-            color: var(--dark);
             font-weight: 600;
         }
-        h2 { font-size: 1.75rem; }
-        h3 { font-size: 1.25rem; color: var(--gray-dark); margin-bottom: 1rem; }
+        h2 { font-size: 1.75rem; color: var(--accent-purple); }
+        h3 { font-size: 1.25rem; color: var(--accent-blue); margin-bottom: 1rem; }
 
         p.description {
             text-align: center;
             font-size: 1.1rem;
-            color: var(--secondary);
+            color: var(--secondary-text);
             max-width: 800px;
             margin: 0.5rem auto 2rem auto;
         }
@@ -83,7 +85,7 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem 2.5rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 2rem;
         }
         .control-group {
@@ -92,39 +94,36 @@
             align-items: center;
             gap: 1rem;
         }
-        .slider-label { font-weight: 500; text-align: right; color: var(--gray-dark); }
-        .slider-value { font-weight: 600; color: var(--danger); text-align: center; font-size: 1.1rem; }
+        .slider-label { font-weight: 500; text-align: right; color: var(--secondary-text); }
+        .slider-value { font-weight: 600; color: var(--accent-purple); text-align: center; font-size: 1.1rem; }
         
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
             height: 8px;
-            background: #e9ecef;
+            background: var(--border-color);
             border-radius: 5px;
             outline: none;
-            opacity: 0.9;
-            transition: opacity .2s;
         }
-        input[type="range"]:hover { opacity: 1; }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
-            background: var(--primary);
+            background: var(--accent-blue);
             cursor: pointer;
             border-radius: 50%;
-            border: 2px solid var(--white);
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            border: 2px solid var(--card-bg);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
         }
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: var(--primary);
+            background: var(--accent-blue);
             cursor: pointer;
             border-radius: 50%;
-            border: 2px solid var(--white);
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            border: 2px solid var(--card-bg);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
         }
 
         .button-container {
@@ -137,17 +136,17 @@
             padding: 0.8rem 2.5rem;
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--white);
-            background-color: var(--success);
+            color: var(--primary-text);
+            background-image: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
             border: none;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         #throwButton:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
         
         .main-content-area {
@@ -160,9 +159,9 @@
         #simulationCanvas {
             width: 100%;
             height: auto;
-            background-color: #eef7ff;
+            background-color: var(--card-bg); /* Match card */
             border-radius: 0.5rem;
-            border: 1px solid #cce5ff;
+            border: 1px solid var(--border-color);
         }
         .graphs-wrapper {
             display: flex;
@@ -170,11 +169,10 @@
             gap: 1.5rem;
         }
         .graph-container {
-            background-color: var(--white);
-            border: 1px solid #dee2e6;
+            background-color: var(--bg-color); /* Match main bg */
+            border: 1px solid var(--border-color);
             border-radius: 0.5rem;
             padding: 1rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
         }
         
         .output-panels {
@@ -188,25 +186,23 @@
             font-weight: 500;
             text-align: center;
             padding: 1rem;
-            background-color: var(--white);
-            border: 1px solid #dee2e6;
+            background-color: var(--bg-color); /* Match main bg */
+            border: 1px solid var(--border-color);
             border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
             line-height: 1.6;
         }
         #velocity-display {
-            font-family: var(--font-family-monospace);
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-weight: 600;
-            color: var(--primary);
-            background-color: #f0f8ff;
+            color: var(--accent-blue);
         }
 
         .guidance-section {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid var(--border-color);
         }
-        .guidance-section p { line-height: 1.7; color: #495057; }
+        .guidance-section p { line-height: 1.7; color: var(--secondary-text); }
         .two-column-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -214,23 +210,22 @@
             margin: 2rem 0;
         }
         .column {
-            background-color: var(--white);
+            background-color: var(--bg-color);
             padding: 1.5rem;
             border-radius: 0.5rem;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--border-color);
         }
         .column h3 {
-            margin-top: 0;
-            color: var(--primary);
-            border-bottom: 1px solid #dee2e6;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 0.75rem;
         }
         .column ul { list-style-type: none; padding-left: 0; }
         .column li { margin-bottom: 0.75rem; }
         
         .equation-box {
-            background-color: #eef7ff;
-            border-left: 4px solid var(--blue);
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--accent-blue);
             padding: 1.2rem;
             margin: 1.5rem 0;
             border-radius: 0.375rem;
@@ -238,8 +233,7 @@
             text-align: center;
         }
         .final-equation-box {
-            background-color: #eaf6eb;
-            border-left-color: var(--green);
+            border-left-color: var(--success-green);
         }
         .equation {
             font-size: 1.3rem;
@@ -251,35 +245,14 @@
             gap: 0.3em;
         }
         .equation i { font-style: italic; }
-        .equation sub, .equation sup {
-            font-size: 0.8em;
-            line-height: 1;
-            position: relative;
-        }
+        .equation sub, .equation sup { font-size: 0.8em; line-height: 1; position: relative; }
         .equation sup { bottom: 0.5em; }
         .equation sub { top: 0.3em; }
-        .equation .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            text-align: center;
-            vertical-align: middle;
-            margin: 0 0.2em;
-        }
-        .equation .numerator {
-            font-size: 1.1rem;
-            padding: 0 0.2em;
-            border-bottom: 1.5px solid var(--dark);
-        }
-        .equation .denominator {
-            font-size: 1.1rem;
-            padding: 0 0.2em;
-        }
+        .equation .fraction { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; margin: 0 0.2em; }
+        .equation .numerator { font-size: 1.1rem; padding: 0 0.2em; border-bottom: 1.5px solid var(--primary-text); }
+        .equation .denominator { font-size: 1.1rem; padding: 0 0.2em; }
         
-        @media (max-width: 1200px) {
-            .main-content-area {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 1200px) { .main-content-area { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .header-container { flex-direction: column; gap: 10px; }
             .two-column-layout { grid-template-columns: 1fr; }
@@ -295,11 +268,6 @@
 <div class="container">
     
     <div class="header-container">
-        <!-- 
-            IMPORTANT: 
-            1. Put your logo file (e.g., "my-logo.png") in the same folder as this HTML file.
-            2. Change "logo-placeholder.png" below to your actual file name.
-        -->
         <img id="logo" src="my-logo.png" alt="Logo">
         <h1>MODELING IB PHYSICS : KINEMATICS</h1>
     </div>
@@ -460,24 +428,36 @@
             return { x: 40 + x_m * scale, y: groundLevel - y_m * scale };
         }
 
+        // --- JAVASCRIPT DRAWING COLORS UPDATED FOR DARK THEME ---
         function drawScene() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#adb5bd';
+            // Match canvas background to the card background
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--card-bg').trim();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Ground
+            ctx.strokeStyle = '#8B5C3B'; // Light Brown
             ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(0, groundLevel);
             ctx.lineTo(canvas.width, groundLevel);
             ctx.stroke();
-            ctx.fillStyle = '#6c757d';
-            ctx.font = '12px var(--font-family-sans-serif)';
-            ctx.fillText("Ground", 5, groundLevel + 15);
+            
+            // Wall
             const wallTopLeft = transform(wallDistance, wallHeight);
             const wallPixelHeight = groundLevel - wallTopLeft.y;
-            ctx.fillStyle = '#6c757d';
+            ctx.fillStyle = '#94A3B8'; // Light Blue-Gray
             ctx.fillRect(wallTopLeft.x, wallTopLeft.y, 10, Math.max(0, wallPixelHeight));
+
+            // Labels
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--secondary-text').trim();
+            ctx.font = '12px system-ui';
+            ctx.fillText("Ground", 5, groundLevel + 15);
             ctx.fillText(`Wall (${wallHeight.toFixed(1)}m)`, wallTopLeft.x - 20, wallTopLeft.y - 10);
+            
+            // Launch point
             const launchPos = transform(0, initialHeight);
-            ctx.fillStyle = 'var(--primary)';
+            ctx.fillStyle = '#4ADE80'; // Vibrant Green
             ctx.beginPath();
             ctx.arc(launchPos.x, launchPos.y, 5, 0, 2 * Math.PI);
             ctx.fill();
@@ -501,7 +481,7 @@
 
         function drawBallAndTrajectory() {
             if (trajectory.length > 1) {
-                ctx.strokeStyle = 'rgba(220, 53, 69, 0.7)';
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)'; // Light Blue Trajectory
                 ctx.lineWidth = 2.5;
                 ctx.beginPath();
                 const startPoint = transform(trajectory[0].x, trajectory[0].y);
@@ -510,14 +490,14 @@
                 ctx.stroke();
             }
             const ballPos = transform(ball.x, ball.y);
-            ctx.fillStyle = 'var(--danger)';
+            ctx.fillStyle = '#FDE047'; // Bright Yellow Ball
             ctx.beginPath();
             ctx.arc(ballPos.x, ballPos.y, 7, 0, 2 * Math.PI);
             ctx.fill();
 
             const vectorScale = 6;
-            const vxColor = 'var(--blue)';
-            const vyColor = 'var(--danger)';
+            const vxColor = '#A78BFA'; // Purple
+            const vyColor = '#F472B6'; // Pink
             
             const vx_end_x = ballPos.x + ball.vx * vectorScale;
             ctx.beginPath();
@@ -528,7 +508,7 @@
             ctx.stroke();
             drawArrowhead(ballPos.x, ballPos.y, vx_end_x, ballPos.y, vxColor);
             ctx.fillStyle = vxColor;
-            ctx.font = 'bold 12px var(--font-family-sans-serif)';
+            ctx.font = 'bold 12px system-ui';
             ctx.fillText('Vx', vx_end_x + 5, ballPos.y + 4);
 
             const vy_end_y = ballPos.y - currentVy * vectorScale;
@@ -543,17 +523,17 @@
             ctx.fillText('Vy', ballPos.x + 5, vy_end_y - 5);
         }
 
-        // --- JAVASCRIPT GRAPH COLOR LOGIC UPDATED ---
         function drawGraph(gCtx, data, timeLimit, yRange, color) {
             const w = gCtx.canvas.width, h = gCtx.canvas.height;
             const padX = 40, padY = 25;
             gCtx.clearRect(0, 0, w, h);
             
-            // Draw axes and labels in black
-            gCtx.strokeStyle = 'var(--black)';
-            gCtx.fillStyle = 'var(--black)';
+            // Draw axes and labels
+            const axisColor = getComputedStyle(document.documentElement).getPropertyValue('--graph-axis-color').trim();
+            gCtx.strokeStyle = axisColor;
+            gCtx.fillStyle = axisColor;
             gCtx.lineWidth = 1;
-            gCtx.font = '11px var(--font-family-sans-serif)';
+            gCtx.font = '11px system-ui';
             gCtx.beginPath();
             gCtx.moveTo(padX, padY); gCtx.lineTo(padX, h - padY); gCtx.lineTo(w - padX, h - padY);
             gCtx.stroke();
@@ -573,8 +553,8 @@
             
             if (data.length < 2) return;
             
-            // Draw the plotted line with the specified color (now red)
-            gCtx.strokeStyle = color;
+            // Draw the plotted line
+            gCtx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue(color).trim();
             gCtx.lineWidth = 2.5;
             gCtx.beginPath();
             data.forEach((point, i) => {
@@ -589,15 +569,12 @@
             const timeLimit = finalTime > 0 ? finalTime : (time > 0 ? time : 1);
             const vxRange = { min: ball.vx - 2, max: ball.vx + 2 };
             if (ball.vx === 0) { vxRange.min = -2; vxRange.max = 2; }
-            // Call with red color for the line
-            drawGraph(vxCtx, vxData, timeLimit, vxRange, 'var(--red)');
+            drawGraph(vxCtx, vxData, timeLimit, vxRange, '--graph-line-red');
 
             const vyMaxAbs = Math.max(Math.abs(ball.vy), Math.abs(ball.vy + G * timeLimit));
             const vyRange = { min: -vyMaxAbs - 5, max: vyMaxAbs + 5 };
-            // Call with red color for the line
-            drawGraph(vyCtx, vyData, timeLimit, vyRange, 'var(--red)');
+            drawGraph(vyCtx, vyData, timeLimit, vyRange, '--graph-line-red');
         }
-        // --- END OF JAVASCRIPT UPDATES ---
 
         function startSimulation() {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
